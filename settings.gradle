@@ -1,0 +1,2 @@
+rootProject.name='iTunesAPI'
+include ':app'
