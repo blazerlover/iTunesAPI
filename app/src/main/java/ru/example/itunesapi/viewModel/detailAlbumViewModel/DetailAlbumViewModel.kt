@@ -1,10 +1,11 @@
 package ru.example.itunesapi.viewModel.detailAlbumViewModel
 
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import ru.example.itunesapi.ui.detailAlbumView.DetailAlbumView
 import ru.example.itunesapi.viewModel.row.DetailAlbumRow
 
-interface DetailAlbumViewModel: DetailAlbumView.Listener {
+interface DetailAlbumViewModel {
     fun getDetailAlbum(albumId: Int)
-    fun getLiveData(): MutableLiveData<DetailAlbumRow>
+    fun getDetailAlbumRowLiveData(): MutableLiveData<DetailAlbumRow>
+    fun getLoadingLiveData(): ObservableField<Boolean>
 }

@@ -1,5 +1,7 @@
 package ru.example.itunesapi
 
+const val ENTER_ARTIST_NAME = "enter the artist's name"
+
 const val ALBUM_ID_KEY = "albumId"
 
 const val RESULT_PARSER_KEY = "results"

@@ -1,5 +1,6 @@
 package ru.example.itunesapi.viewModel.detailAlbumViewModel
 
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -14,28 +15,34 @@ class DetailAlbumViewModelImpl(
 
     private var detailAlbumRow: DetailAlbumRow? = null
 
-    private var liveData = MutableLiveData<DetailAlbumRow>()
+    private var detailAlbumRowLiveData = MutableLiveData<DetailAlbumRow>()
+    private val loadingLiveData = ObservableField<Boolean>()
 
-    override fun onDetailAlbumViewReady(albumId: Int) {
-        getDetailAlbum(albumId)
+    init {
+        loadingLiveData.set(true)
     }
 
     override fun getDetailAlbum(albumId: Int) {
-        if (liveData.value == null) {
+        if (detailAlbumRowLiveData.value == null) {
             object : Thread() {
                 override fun run() {
                     val detailAlbum = api.loadDetailAlbum(albumId)
                     detailAlbumRow = detailAlbumDataBinder.bindDetailAlbumRow(detailAlbum)
-                    liveData.postValue(detailAlbumRow)
+                    detailAlbumRowLiveData.postValue(detailAlbumRow)
+                    loadingLiveData.set(false)
                 }
             }.start()
         } else {
-            liveData.postValue(detailAlbumRow)
+            detailAlbumRowLiveData.postValue(detailAlbumRow)
         }
     }
 
-    override fun getLiveData(): MutableLiveData<DetailAlbumRow> {
-        return liveData
+    override fun getDetailAlbumRowLiveData(): MutableLiveData<DetailAlbumRow> {
+        return detailAlbumRowLiveData
+    }
+
+    override fun getLoadingLiveData(): ObservableField<Boolean> {
+        return loadingLiveData
     }
 
     class DetailAlbumViewModelFactory(
