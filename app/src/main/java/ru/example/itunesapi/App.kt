@@ -8,7 +8,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        dependencyRoot = DependencyRoot(this)
+        dependencyRoot = DependencyRoot()
     }
 
     fun getDependencyRoot(): DependencyRoot {

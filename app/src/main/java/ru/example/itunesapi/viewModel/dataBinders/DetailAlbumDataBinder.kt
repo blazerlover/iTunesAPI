@@ -5,6 +5,7 @@ import ru.example.itunesapi.viewModel.row.DetailAlbumRow
 import ru.example.itunesapi.viewModel.row.TrackRow
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 class DetailAlbumDataBinder {
@@ -24,7 +25,10 @@ class DetailAlbumDataBinder {
     }
 
     private fun trackTimeFormat(trackTime: Int): String {
-        val sf = SimpleDateFormat("hh:mm:ss", Locale.getDefault())
-        return sf.format(trackTime)
+        return String.format("%02d:%02d",
+            TimeUnit.MILLISECONDS.toMinutes(trackTime.toLong()),
+            TimeUnit.MILLISECONDS.toSeconds(trackTime.toLong()) -
+                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(trackTime.toLong()))
+        )
     }
 }

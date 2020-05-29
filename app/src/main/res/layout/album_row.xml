@@ -1,40 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    card_view:cardCornerRadius="4dp">
 
-    <LinearLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="albumRow"
+            type="ru.example.itunesapi.viewModel.row.AlbumRow" />
+
+        <variable
+            name="listener"
+            type="ru.example.itunesapi.ui.albumsView.AlbumsAdapter.Listener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dp">
+        android:layout_margin="4dp"
+        android:onClick="@{ (view) -> listener.onAlbumsAdapterItemClicked(albumRow.albumId) }"
+        card_view:cardCornerRadius="4dp">
 
-        <ImageView
-            android:id="@+id/album_row__ivAlbum"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:orientation="vertical"
+            android:padding="5dp">
 
-        <TextView
-            android:id="@+id/album_row__tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_gravity="start"
-            android:layout_marginTop="4dp"
-            android:text="asd" />
+            <ImageView
+                android:id="@+id/album_row__ivAlbum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@string/album_art"
+                app:url="@{albumRow.albumPictureUrl}" />
 
-        <TextView
-            android:id="@+id/album_row__tvArtist"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_gravity="start"
-            android:layout_marginTop="4dp"
-            android:text="asd" />
+            <TextView
+                android:id="@+id/album_row__tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_gravity="start"
+                android:layout_marginTop="4dp"
+                android:text="@{albumRow.title}" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/album_row__tvArtist"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_gravity="start"
+                android:layout_marginTop="4dp"
+                android:text="@{albumRow.artist}" />
 
-</androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
 
